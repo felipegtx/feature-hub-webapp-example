@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './todo-list.scss';
 
 const {useEffect, useState} = React;
 
@@ -11,13 +12,17 @@ function TodoListDisplay({list}) {
   for (let i = 0; i < items.length; i++) {
     rows.push(
       <div key={i}>
-        {items[i]}
+        <label>{items[i]}</label>
         <button onClick={() => list.remove(items[i])}>X</button>
       </div>
     );
   }
 
-  return <div>{rows.length > 0 ? rows : 'Nothing to display'}</div>;
+  return (
+    <div className={styles.list}>
+      {rows.length > 0 ? rows : 'Nothing to display'}
+    </div>
+  );
 }
 
 export default {

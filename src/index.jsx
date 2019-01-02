@@ -13,6 +13,7 @@ import counterDisplayDefinition from './counter/counter-display';
 import todoDefinition from './todo/todo-list';
 import todoListAdd from './todo/todo-list-add';
 import todoListItems from './todo/todo-list-items';
+import './style.scss';
 
 const registry = new FeatureServiceRegistry({});
 
@@ -31,14 +32,15 @@ ReactDOM.render(
       manager={manager}
       featureAppDefinition={counterDisplayDefinition}
     />
-    <hr/>
+    <hr />
     <FeatureAppContainer
-       manager={manager}
-       featureAppDefinition={todoListItems}
+      manager={manager}
+      featureAppDefinition={todoListItems}
     />
     <FeatureAppContainer
-       manager={manager}
-       featureAppDefinition={todoListAdd}
+      manager={manager}
+      featureAppDefinition={todoListAdd}
+      // css={[{href: todoListCss}]}
     />
   </div>,
   document.getElementById('app')

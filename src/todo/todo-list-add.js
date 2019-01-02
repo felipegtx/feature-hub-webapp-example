@@ -13,6 +13,7 @@ function createButton(title, inputRef, onClick) {
 function createInput(inputValue) {
   const input = document.createElement('input');
 
+  input.type = "text";
   input.placeholder = inputValue;
 
   return input;
