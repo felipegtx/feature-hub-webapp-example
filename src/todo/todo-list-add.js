@@ -1,4 +1,4 @@
-import $dom from '../helper/domFactory';
+import $dom from '../helper/dom-factory';
 
 export default {
   id: 'example:todo-list-add',
