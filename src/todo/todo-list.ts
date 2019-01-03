@@ -1,5 +1,6 @@
 import NanoEvents from 'nanoevents';
-import {TodoListValidation, Operation} from './todo-list-item-validator';
+import {TodoListValidation} from './todo-list-item-validation';
+import {Operation} from './domain/operation';
 
 class TodoListV1 {
   items: Object[];
