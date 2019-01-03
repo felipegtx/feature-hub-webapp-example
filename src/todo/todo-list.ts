@@ -1,4 +1,5 @@
 import NanoEvents from 'nanoevents';
+import {TodoListValidation, Operation} from './todo-list-item-validator';
 
 class TodoListV1 {
   items: Object[];
@@ -10,12 +11,41 @@ class TodoListV1 {
     this.add = this.add.bind(this);
   }
 
-  public add(item: Object): void {
-    this.update([...this.items, item]);
+  public add = (item: Object): boolean =>
+    this.safeExecute(() =>
+      this.update([...this.items, this.validate(Operation.Add, item)])
+    );
+
+  public remove(item: Object): boolean {
+    return this.safeExecute(() => {
+      item = this.validate(Operation.Remove, item);
+      this.update(this.items.filter(i => i !== item));
+    });
   }
 
-  public remove(item: Object): void {
-    this.update(this.items.filter(i => i !== item));
+  validate(operation: Operation, item: Object): Object {
+    let validationResult = TodoListValidation.getInstance().validate(
+      operation,
+      item,
+      this.items
+    );
+
+    if (!validationResult.allOk()) {
+      throw validationResult.errors().join('\n');
+    }
+
+    return item;
+  }
+
+  safeExecute(what: () => void): boolean {
+    try {
+      what();
+      return true;
+    } catch (e) {
+      alert(e);
+      console.log(e);
+      return false;
+    }
   }
 
   subscribe(listener) {
@@ -23,7 +53,6 @@ class TodoListV1 {
   }
 
   update(newItems: Object[]) {
-    console.log(newItems);
     this.items = newItems;
     this.emitter.emit('update');
   }

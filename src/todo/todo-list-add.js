@@ -1,23 +1,4 @@
-function createButton(title, inputRef, onClick) {
-  const button = document.createElement('button');
-
-  button.innerHTML = title;
-  button.onclick = () => {
-    onClick(inputRef.value);
-    inputRef.value = '';
-  };
-
-  return button;
-}
-
-function createInput(inputValue) {
-  const input = document.createElement('input');
-
-  input.type = "text";
-  input.placeholder = inputValue;
-
-  return input;
-}
+import $dom from '../helper/domFactory';
 
 export default {
   id: 'example:todo-list-add',
@@ -31,9 +12,13 @@ export default {
 
     return {
       attachTo(container) {
-        let input = createInput('New item text');
-        container.appendChild(input);
-        container.appendChild(createButton('New', input, todoListV1.add));
+        let input = $dom.createInput('New item text').appendChildTo(container);
+        $dom
+          .createButton('New', () => {
+            todoListV1.add(input.val());
+            input.val('').focus();
+          })
+          .appendChildTo(container);
       }
     };
   }
